@@ -65,6 +65,14 @@ $ lgtv NameTV volumeUp
 
 ### Setup
 
+[Install python 3.9](https://www.python.org/downloads/)
+![image](https://user-images.githubusercontent.com/1102589/125335354-d660e680-e322-11eb-834b-435cc36ce013.png)
+
+Install virtual env:
+```bash
+pip install virtualenv
+```
+
 ```bash
 $ python -m venv venv
 ```
