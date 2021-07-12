@@ -164,5 +164,144 @@ class LGTVRemote(WebSocketClient):
     # Supported commands
     ################################################################################
 
+    def on(self):
+        if not self.__macAddress:
+            print ("Client must have been powered on and paired before power on works")
+        send_magic_packet(self.__macAddress)
+
+    def off(self):
+        self.__send_command("request", "ssap://system/turnOff")
+
     def openBrowserAt(self, url, callback=None):
         self.__send_command("request", "ssap://system.launcher/open", {"target": url}, callback)
+
+    def notification(self, message, callback=None):
+        self.__send_command("request", "ssap://system.notifications/createToast", {"message": message}, callback)
+
+    def notificationClose(self, toastId, callback=None):
+        self.__send_command("request", "ssap://system.notifications/closeToast", {'toastId': toastId}, callback)
+
+    def notificationWithIcon(self, message, url, callback=None):
+        if os.path.exists(url):
+            with open(url) as f:
+                content = f.read()
+        else:
+            content = requests.get(url).content
+        data = base64.b64encode(content)
+        data = {"iconData": data, "iconExtension": "png", "message": message}
+        self.__send_command("request", "ssap://system.notifications/createToast", data, callback)
+
+    def mute(self, muted, callback=None):
+        self.__send_command("request", "ssap://audio/setMute", {"mute": muted}, callback)
+
+    def audioStatus(self, callback=None):
+        self.__send_command("request", "ssap://audio/getStatus", None, callback, "status")
+
+    def audioVolume(self, callback=None):
+        self.__send_command("request", "ssap://audio/getVolume", None, callback, "status")
+
+    def setVolume(self, level, callback=None):
+        self.__send_command("request", "ssap://audio/setVolume", {"volume": level}, callback)
+
+    def volumeUp(self, callback=None):
+        self.__send_command("request", "ssap://audio/volumeUp", None, callback, "volumeup")
+
+    def volumeDown(self, callback=None):
+        self.__send_command("request", "ssap://audio/volumeDown", None, callback, "volumedown")
+
+    def inputMediaPlay(self, callback=None):
+        self.__send_command("request", "ssap://media.controls/play", None, callback)
+
+    def inputMediaStop(self, callback=None):
+        self.__send_command("request", "ssap://media.controls/stop", None, callback)
+
+    def inputMediaPause(self, callback=None):
+        self.__send_command("request", "ssap://media.controls/pause", None, callback)
+
+    def inputMediaRewind(self, callback=None):
+        self.__send_command("request", "ssap://media.controls/rewind", None, callback)
+
+    def inputMediaFastForward(self, callback=None):
+        self.__send_command("request", "ssap://media.controls/fastForward", None, callback)
+
+    def inputChannelUp(self, callback=None):
+        self.__send_command("request", "ssap://tv/channelUp", None, callback)
+
+    def inputChannelDown(self, callback=None):
+        self.__send_command("request", "ssap://tv/channelDown", None, callback)
+
+    def setTVChannel(self, channel, callback=None):
+        self.__send_command("request", "ssap://tv/openChannel", {"channelId": channel}, callback)
+
+    def getTVChannel(self, callback=None):
+        self.__send_command("request", "ssap://tv/getCurrentChannel", None, callback, "channels")
+
+    def listChannels(self, callback=None):
+        self.__send_command("request", "ssap://tv/getChannelList", None, callback, "channels")
+
+    def getCursorSocket(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.networkinput/getPointerInputSocket", None, callback)
+
+    def input3DOn(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.tv.display/set3DOn", None, callback)
+
+    def input3DOff(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.tv.display/set3DOff", None, callback)
+
+    def listInputs(self, callback=None):
+        self.__send_command("request", "ssap://tv/getExternalInputList", None, callback, "input")
+
+    def setInput(self, input_id, callback=None):
+        self.__send_command("request", "ssap://tv/switchInput", {"inputId": input_id}, callback)
+
+    def swInfo(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.update/getCurrentSWInformation", None, callback, "sw_info")
+
+    def listServices(self, callback=None):
+        self.__send_command("request", "ssap://api/getServiceList", None, callback, "services")
+
+    def listLaunchPoints(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.applicationManager/listLaunchPoints", None, callback, "launcher")
+
+    def openAppWithPayload(self, payload, callback=None):
+        self.__send_command("request", "ssap://com.webos.applicationManager/launch", payload, callback)
+
+    def startApp(self, appid, callback=None):
+        self.__send_command("request", "ssap://system.launcher/launch", {'id': appid}, callback)
+
+    def closeApp(self, appid, callback=None):
+        self.__send_command("request", "ssap://system.launcher/close", {'id': appid}, callback)
+
+    def openYoutubeId(self, videoid, callback=None):
+        self.openYoutubeURL("http://www.youtube.com/tv?v=" + videoid, callback)
+
+    def openYoutubeURL(self, url, callback=None):
+        payload = {"id": "youtube.leanback.v4", "params": {"contentTarget": url}}
+        self.__send_command("request", "ssap://system.launcher/launch", payload, callback)
+
+    def getForegroundAppInfo(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.applicationManager/getForegroundAppInfo", None, callback)
+
+    def getPowerState(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.tvpower/power/getPowerState", None, callback)
+
+    def getSoundOutput(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.service.apiadapter/audio/getSoundOutput", None, callback)
+
+    def getSystemInfo(self, callback=None):
+        self.__send_command("request", "ssap://system/getSystemInfo", None, callback)
+
+    def listApps(self, callback=None):
+        self.__send_command("request", "ssap://com.webos.applicationManager/listApps", None, callback)
+
+    def setSoundOutput(self, output, callback=None):
+        self.__send_command("request", "ssap://audio/changeSoundOutput", {"output": output}, callback)
+
+    def screenOff(self):
+        self.__send_command("request", "ssap://com.webos.service.tvpower/power/turnOffScreen", {"standbyMode": "active"})
+
+    def screenOn(self):
+        self.__send_command("request", "ssap://com.webos.service.tvpower/power/turnOnScreen", {"standbyMode": "active"})
+
+    def getPictureSettings(self, keys=["contrast", "backlight", "brightness", "color"]):
+        self.__send_command("request", "ssap://settings/getSystemSettings", {"category": "picture", "keys": keys})
