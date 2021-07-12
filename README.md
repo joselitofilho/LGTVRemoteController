@@ -1,12 +1,19 @@
 # LGTVRemoteController
-LGTV WebOS Remote Controller.
+> LGTV WebOS Remote Controller.
 
-## Available Commands
+**Table of contents**
+
+- [Available commands](#available-commands)
+- [Getting started](#getting-started)
+  - [Setup](#setup)
+  - [Usage](#usage)
+- [License](#license)
+
+## Available commands
 
 ```bash
 $ lgtv scan
 $ lgtv auth <host> NameTV
-$ lgtv NameTV openBrowserAt <url>
 $ lgtv NameTV audioStatus
 $ lgtv NameTV audioVolume
 $ lgtv NameTV closeApp <appid>
@@ -82,7 +89,7 @@ $ source venv/bin/activate
 
 Turn on your TV;
 
-Search for LGTVs:
+Search for LG TVs:
 ```bash
 (venv) $ lgtv scan
 ```
@@ -102,7 +109,7 @@ Output:
 }
 ```
 
-Authenticate you LGTV:
+Authenticate your LG TV:
 ```bash
 (venv) $ lgtv auth 192.168.0.10 NameTV
 ```
@@ -113,4 +120,13 @@ DEBUG:getmac:Raw MAC found: XX-XX-XX-XX-XX-XX
 Please accept the pairing request on your LG TV
 ```
 
+Open a URL in your LG TV:
+```bash
+(venv) $ lgtv NameTV openBrowserAt https://github.com/
+```
+
 Enjoy!
+
+## License
+
+[MIT](LICENSE "License")
