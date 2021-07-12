@@ -68,25 +68,27 @@ $ lgtv NameTV volumeUp
 [Install python 3.9](https://www.python.org/downloads/)
 ![image](https://user-images.githubusercontent.com/1102589/125335354-d660e680-e322-11eb-834b-435cc36ce013.png)
 
-Install virtual env:
+Install virtualenv using pip:
 ```bash
 pip install virtualenv
 ```
 
+Create a virtual environment:
 ```bash
 $ python -m venv venv
 ```
 
-Windows:
+Active your virtual environment - Windows:
 ```bash
 $ ./venv/Scripts/activate
 ```
 
-Linux or MacOS:
+Active your virtual environment - Linux or MacOS:
 ```bash
 $ source venv/bin/activate
 ```
 
+Install LGTV Remote Controller App
 ```bash
 (venv) $ pip install git+https://github.com/joselitofilho/LGTVRemoteController
 ```
