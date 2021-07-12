@@ -55,11 +55,8 @@ $ lgtv NameTV volumeUp
 ```
 
 ## Getting started
+
 ### Setup
-
-// TODO
-
-### Install
 
 ```bash
 $ python -m venv venv
@@ -79,7 +76,11 @@ $ source venv/bin/activate
 (venv) $ pip install git+https://github.com/joselitofilho/LGTVRemoteController
 ```
 
-### Run
+### Usage
+
+**IMPORTANT**: Make sure your computer is on the same network connection as your TV.
+
+Turn on your TV;
 
 Search for LGTVs:
 ```bash
@@ -101,6 +102,15 @@ Output:
 }
 ```
 
-## Usage
+Authenticate you LGTV:
+```bash
+(venv) $ lgtv auth 192.168.0.10 NameTV
+```
 
-// TODO
+Output:
+```bash
+DEBUG:getmac:Raw MAC found: XX-XX-XX-XX-XX-XX
+Please accept the pairing request on your LG TV
+```
+
+Enjoy!
