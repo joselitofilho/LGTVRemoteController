@@ -1,0 +1,4 @@
+wakeonlan==2.0.1
+ws4py==0.5.1
+requests==2.25.1
+getmac==0.8.2
